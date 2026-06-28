@@ -1,6 +1,8 @@
 package com.minjun.spring_playground;
 
 import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,5 +37,11 @@ public class LogController {
   @PatchMapping("/logs/{id}")
   public LogResponse updateLog(@PathVariable Long id, @RequestBody UpdateLogRequest request) {
     return logService.updateLog(id, request);
+  }
+
+  @DeleteMapping("/logs/{id}")
+  public ResponseEntity<Void> deleteLog(@PathVariable Long id) {
+    logService.deleteLog(id);
+    return ResponseEntity.noContent().build();
   }
 }

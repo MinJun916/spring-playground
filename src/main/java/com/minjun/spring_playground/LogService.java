@@ -53,4 +53,12 @@ public class LogService {
 
     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Log not found");
   }
+
+  public void deleteLog(Long id) {
+    boolean removed = logs.removeIf(log -> log.id().equals(id));
+
+    if (!removed) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Log not found");
+    }
+  }
 }
