@@ -30,9 +30,7 @@ public class LogService {
   }
 
   public LogResponseDTO createLog(LogCreateRequestDTO request) {
-    Long nextId = logRepository.getNextId();
-
-    Log newLog = new Log(nextId, request.title(), request.content(), request.mood());
+    Log newLog = new Log(request.title(), request.content(), request.mood());
 
     Log savedLog = logRepository.save(newLog);
 

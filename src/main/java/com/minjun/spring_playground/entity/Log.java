@@ -1,15 +1,30 @@
 package com.minjun.spring_playground.entity;
 
 import com.minjun.spring_playground.enums.Mood;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity
 public class Log {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
   private String title;
+
   private String content;
+
+  @Enumerated(EnumType.STRING)
   private Mood mood;
 
-  public Log(Long id, String title, String content, Mood mood) {
-    this.id = id;
+  protected Log() {}
+
+  public Log(String title, String content, Mood mood) {
     this.title = title;
     this.content = content;
     this.mood = mood;
