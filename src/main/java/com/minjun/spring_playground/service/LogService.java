@@ -4,7 +4,7 @@ import com.minjun.spring_playground.dto.CreateLogRequest;
 import com.minjun.spring_playground.dto.LogResponse;
 import com.minjun.spring_playground.dto.UpdateLogRequest;
 import com.minjun.spring_playground.entity.Log;
-import java.util.ArrayList;
+import com.minjun.spring_playground.repository.LogRepository;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,14 +13,14 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class LogService {
 
-  private final List<Log> logs =
-      new ArrayList<>(
-          List.of(
-              new Log(1L, "Spring Boot 첫 실습", "Controller와 record를 배웠다.", "NERVOUS"),
-              new Log(2L, "인턴 첫 출근 준비", "Java 문법과 API 흐름을 복습했다.", "EXCITED")));
+  private final LogRepository logRepository;
+
+  public LogService(LogRepository logRepository) {
+    this.logRepository = logRepository;
+  }
 
   public List<LogResponse> getLogs() {
-    return logs.stream()
+    return logRepository.findAll().stream()
         .map(log -> new LogResponse(log.getId(), log.getTitle(), log.getContent(), log.getMood()))
         .toList();
   }
@@ -32,14 +32,14 @@ public class LogService {
   }
 
   public LogResponse createLog(CreateLogRequest request) {
-    Long nextId = (long) logs.size() + 1;
+    Long nextId = logRepository.getNextId();
 
     Log newLog = new Log(nextId, request.title(), request.content(), request.mood());
 
-    logs.add(newLog);
+    Log savedLog = logRepository.save(newLog);
 
     return new LogResponse(
-        newLog.getId(), newLog.getTitle(), newLog.getContent(), newLog.getMood());
+        savedLog.getId(), savedLog.getTitle(), savedLog.getContent(), savedLog.getMood());
   }
 
   public LogResponse updateLog(Long id, UpdateLogRequest request) {
@@ -51,17 +51,14 @@ public class LogService {
   }
 
   public void deleteLog(Long id) {
-    boolean removed = logs.removeIf(log -> log.getId().equals(id));
+    Log log = findLogById(id);
 
-    if (!removed) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Log not found");
-    }
+    logRepository.delete(log);
   }
 
   private Log findLogById(Long id) {
-    return logs.stream()
-        .filter(log -> log.getId().equals(id))
-        .findFirst()
+    return logRepository
+        .findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Log Not Found"));
   }
 }
