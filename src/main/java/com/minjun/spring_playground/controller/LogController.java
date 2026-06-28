@@ -5,6 +5,7 @@ import com.minjun.spring_playground.dto.LogResponse;
 import com.minjun.spring_playground.dto.UpdateLogRequest;
 import com.minjun.spring_playground.service.LogService;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,9 +36,16 @@ public class LogController {
     return logService.getLog(id);
   }
 
+  // @PostMapping
+  // public LogResponse createLog(@RequestBody CreateLogRequest request) {
+  //   return logService.createLog(request);
+  // }
+
   @PostMapping
-  public LogResponse createLog(@RequestBody CreateLogRequest request) {
-    return logService.createLog(request);
+  public ResponseEntity<LogResponse> createLog(@RequestBody CreateLogRequest request) {
+    LogResponse response = logService.createLog(request);
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
   @PatchMapping("/{id}")
@@ -48,6 +56,7 @@ public class LogController {
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteLog(@PathVariable Long id) {
     logService.deleteLog(id);
+
     return ResponseEntity.noContent().build();
   }
 }
