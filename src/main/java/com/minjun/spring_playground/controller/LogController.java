@@ -1,5 +1,9 @@
-package com.minjun.spring_playground;
+package com.minjun.spring_playground.controller;
 
+import com.minjun.spring_playground.dto.CreateLogRequest;
+import com.minjun.spring_playground.dto.LogResponse;
+import com.minjun.spring_playground.dto.UpdateLogRequest;
+import com.minjun.spring_playground.service.LogService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

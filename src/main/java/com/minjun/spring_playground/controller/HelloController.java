@@ -1,5 +1,7 @@
-package com.minjun.spring_playground;
+package com.minjun.spring_playground.controller;
 
+import com.minjun.spring_playground.dto.HealthResponse;
+import com.minjun.spring_playground.dto.WelcomeResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

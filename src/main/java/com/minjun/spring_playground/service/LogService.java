@@ -1,5 +1,8 @@
-package com.minjun.spring_playground;
+package com.minjun.spring_playground.service;
 
+import com.minjun.spring_playground.dto.CreateLogRequest;
+import com.minjun.spring_playground.dto.LogResponse;
+import com.minjun.spring_playground.dto.UpdateLogRequest;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.HttpStatus;
