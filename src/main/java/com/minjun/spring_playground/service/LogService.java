@@ -5,7 +5,8 @@ import com.minjun.spring_playground.dto.LogResponseDTO;
 import com.minjun.spring_playground.dto.LogUpdateRequestDTO;
 import com.minjun.spring_playground.entity.Log;
 import com.minjun.spring_playground.repository.LogRepository;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,8 +20,8 @@ public class LogService {
     this.logRepository = logRepository;
   }
 
-  public List<LogResponseDTO> getLogs() {
-    return logRepository.findAll().stream().map(log -> LogResponseDTO.from(log)).toList();
+  public Page<LogResponseDTO> getLogs(Pageable pageable) {
+    return logRepository.findAll(pageable).map(log -> LogResponseDTO.from(log));
   }
 
   public LogResponseDTO getLog(Long id) {

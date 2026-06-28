@@ -6,7 +6,8 @@ import com.minjun.spring_playground.dto.LogUpdateRequestDTO;
 import com.minjun.spring_playground.dto.ResponseDTO;
 import com.minjun.spring_playground.service.LogService;
 import jakarta.validation.Valid;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,8 +35,8 @@ public class LogController {
   // }
 
   @GetMapping
-  public ResponseEntity<ResponseDTO<List<LogResponseDTO>>> getLogs() {
-    List<LogResponseDTO> response = logService.getLogs();
+  public ResponseEntity<ResponseDTO<Page<LogResponseDTO>>> getLogs(Pageable pageable) {
+    Page<LogResponseDTO> response = logService.getLogs(pageable);
 
     return ResponseEntity.ok(new ResponseDTO<>(true, "GET Success!", response));
   }
