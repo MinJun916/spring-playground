@@ -1,8 +1,8 @@
 package com.minjun.spring_playground.controller;
 
-import com.minjun.spring_playground.dto.CreateLogRequest;
-import com.minjun.spring_playground.dto.LogResponse;
-import com.minjun.spring_playground.dto.UpdateLogRequest;
+import com.minjun.spring_playground.dto.LogCreateRequestDTO;
+import com.minjun.spring_playground.dto.LogResponseDTO;
+import com.minjun.spring_playground.dto.LogUpdateRequestDTO;
 import com.minjun.spring_playground.service.LogService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -28,12 +28,12 @@ public class LogController {
   }
 
   @GetMapping
-  public List<LogResponse> getLogs() {
+  public List<LogResponseDTO> getLogs() {
     return logService.getLogs();
   }
 
   @GetMapping("/{id}")
-  public LogResponse getLog(@PathVariable Long id) {
+  public LogResponseDTO getLog(@PathVariable Long id) {
     return logService.getLog(id);
   }
 
@@ -43,15 +43,15 @@ public class LogController {
   // }
 
   @PostMapping
-  public ResponseEntity<LogResponse> createLog(@Valid @RequestBody CreateLogRequest request) {
-    LogResponse response = logService.createLog(request);
+  public ResponseEntity<LogResponseDTO> createLog(@Valid @RequestBody LogCreateRequestDTO request) {
+    LogResponseDTO response = logService.createLog(request);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
   @PatchMapping("/{id}")
-  public LogResponse updateLog(
-      @PathVariable Long id, @Valid @RequestBody UpdateLogRequest request) {
+  public LogResponseDTO updateLog(
+      @PathVariable Long id, @Valid @RequestBody LogUpdateRequestDTO request) {
     return logService.updateLog(id, request);
   }
 
