@@ -3,6 +3,7 @@ package com.minjun.spring_playground.controller;
 import com.minjun.spring_playground.dto.LogCreateRequestDTO;
 import com.minjun.spring_playground.dto.LogResponseDTO;
 import com.minjun.spring_playground.dto.LogUpdateRequestDTO;
+import com.minjun.spring_playground.dto.ResponseDTO;
 import com.minjun.spring_playground.service.LogService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -27,14 +28,23 @@ public class LogController {
     this.logService = logService;
   }
 
+  // @GetMapping
+  // public List<LogResponseDTO> getLogs() {
+  //   return logService.getLogs();
+  // }
+
   @GetMapping
-  public List<LogResponseDTO> getLogs() {
-    return logService.getLogs();
+  public ResponseEntity<ResponseDTO<List<LogResponseDTO>>> getLogs() {
+    List<LogResponseDTO> response = logService.getLogs();
+
+    return ResponseEntity.ok(new ResponseDTO<>(true, "GET Success!", response));
   }
 
   @GetMapping("/{id}")
-  public LogResponseDTO getLog(@PathVariable Long id) {
-    return logService.getLog(id);
+  public ResponseEntity<ResponseDTO<LogResponseDTO>> getLog(@PathVariable Long id) {
+    LogResponseDTO response = logService.getLog(id);
+
+    return ResponseEntity.ok(new ResponseDTO<>(true, "GET Success!", response));
   }
 
   // @PostMapping
@@ -43,22 +53,26 @@ public class LogController {
   // }
 
   @PostMapping
-  public ResponseEntity<LogResponseDTO> createLog(@Valid @RequestBody LogCreateRequestDTO request) {
+  public ResponseEntity<ResponseDTO<LogResponseDTO>> createLog(
+      @Valid @RequestBody LogCreateRequestDTO request) {
     LogResponseDTO response = logService.createLog(request);
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    return ResponseEntity.status(HttpStatus.CREATED)
+        .body(new ResponseDTO<>(true, "POST Success!", response));
   }
 
   @PatchMapping("/{id}")
-  public LogResponseDTO updateLog(
+  public ResponseEntity<ResponseDTO<LogResponseDTO>> updateLog(
       @PathVariable Long id, @Valid @RequestBody LogUpdateRequestDTO request) {
-    return logService.updateLog(id, request);
+    LogResponseDTO response = logService.updateLog(id, request);
+
+    return ResponseEntity.ok(new ResponseDTO<>(true, "PATCH Success!", response));
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteLog(@PathVariable Long id) {
+  public ResponseEntity<ResponseDTO<Void>> deleteLog(@PathVariable Long id) {
     logService.deleteLog(id);
 
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.ok(new ResponseDTO<>(true, "DELETE Success!", null));
   }
 }
