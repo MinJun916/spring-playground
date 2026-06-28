@@ -4,6 +4,7 @@ import com.minjun.spring_playground.dto.CreateLogRequest;
 import com.minjun.spring_playground.dto.LogResponse;
 import com.minjun.spring_playground.dto.UpdateLogRequest;
 import com.minjun.spring_playground.service.LogService;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,14 +43,15 @@ public class LogController {
   // }
 
   @PostMapping
-  public ResponseEntity<LogResponse> createLog(@RequestBody CreateLogRequest request) {
+  public ResponseEntity<LogResponse> createLog(@Valid @RequestBody CreateLogRequest request) {
     LogResponse response = logService.createLog(request);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
   @PatchMapping("/{id}")
-  public LogResponse updateLog(@PathVariable Long id, @RequestBody UpdateLogRequest request) {
+  public LogResponse updateLog(
+      @PathVariable Long id, @Valid @RequestBody UpdateLogRequest request) {
     return logService.updateLog(id, request);
   }
 
