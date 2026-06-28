@@ -10,4 +10,9 @@ public class HelloController {
   public HealthResponse health() {
     return new HealthResponse("OK", "Server is running");
   }
+
+  @GetMapping("/intro")
+  public WelcomeResponse welcome() {
+    return new WelcomeResponse("Dev Log API", "인턴 개발자의 성장 기록", "v1");
+  }
 }
