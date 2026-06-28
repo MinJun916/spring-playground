@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -35,8 +36,9 @@ public class LogController {
   // }
 
   @GetMapping
-  public ResponseEntity<ResponseDTO<Page<LogResponseDTO>>> getLogs(Pageable pageable) {
-    Page<LogResponseDTO> response = logService.getLogs(pageable);
+  public ResponseEntity<ResponseDTO<Page<LogResponseDTO>>> getLogs(
+      @RequestParam(required = false) String keyword, Pageable pageable) {
+    Page<LogResponseDTO> response = logService.getLogs(pageable, keyword);
 
     return ResponseEntity.ok(new ResponseDTO<>(true, "GET Success!", response));
   }

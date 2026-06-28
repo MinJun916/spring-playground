@@ -20,8 +20,14 @@ public class LogService {
     this.logRepository = logRepository;
   }
 
-  public Page<LogResponseDTO> getLogs(Pageable pageable) {
-    return logRepository.findAll(pageable).map(log -> LogResponseDTO.from(log));
+  public Page<LogResponseDTO> getLogs(Pageable pageable, String keyword) {
+    if (keyword == null || keyword.isBlank()) {
+      return logRepository.findAll(pageable).map(LogResponseDTO::from);
+    }
+
+    return logRepository
+        .findByTitleContainingOrContentContaining(keyword, keyword, pageable)
+        .map(log -> LogResponseDTO.from(log));
   }
 
   public LogResponseDTO getLog(Long id) {
