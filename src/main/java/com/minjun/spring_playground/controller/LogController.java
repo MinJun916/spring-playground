@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/logs")
 public class LogController {
 
   private final LogService logService;
@@ -23,27 +25,27 @@ public class LogController {
     this.logService = logService;
   }
 
-  @GetMapping("/logs")
+  @GetMapping
   public List<LogResponse> getLogs() {
     return logService.getLogs();
   }
 
-  @GetMapping("/logs/{id}")
+  @GetMapping("/{id}")
   public LogResponse getLog(@PathVariable Long id) {
     return logService.getLog(id);
   }
 
-  @PostMapping("/logs")
+  @PostMapping
   public LogResponse createLog(@RequestBody CreateLogRequest request) {
     return logService.createLog(request);
   }
 
-  @PatchMapping("/logs/{id}")
+  @PatchMapping("/{id}")
   public LogResponse updateLog(@PathVariable Long id, @RequestBody UpdateLogRequest request) {
     return logService.updateLog(id, request);
   }
 
-  @DeleteMapping("/logs/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteLog(@PathVariable Long id) {
     logService.deleteLog(id);
     return ResponseEntity.noContent().build();
