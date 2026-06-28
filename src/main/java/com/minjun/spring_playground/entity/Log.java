@@ -1,12 +1,14 @@
 package com.minjun.spring_playground.entity;
 
+import com.minjun.spring_playground.enums.Mood;
+
 public class Log {
   private Long id;
   private String title;
   private String content;
-  private String mood;
+  private Mood mood;
 
-  public Log(Long id, String title, String content, String mood) {
+  public Log(Long id, String title, String content, Mood mood) {
     this.id = id;
     this.title = title;
     this.content = content;
@@ -25,11 +27,11 @@ public class Log {
     return content;
   }
 
-  public String getMood() {
+  public Mood getMood() {
     return mood;
   }
 
-  public void update(String title, String content, String mood) {
+  public void update(String title, String content, Mood mood) {
     this.title = title;
     this.content = content;
     this.mood = mood;

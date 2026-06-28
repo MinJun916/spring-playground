@@ -1,6 +1,7 @@
 package com.minjun.spring_playground.repository;
 
 import com.minjun.spring_playground.entity.Log;
+import com.minjun.spring_playground.enums.Mood;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,8 +13,8 @@ public class LogRepository {
   private final List<Log> logs =
       new ArrayList<>(
           List.of(
-              new Log(1L, "Spring Boot 첫 실습", "Controller와 record를 배웠다.", "NERVOUS"),
-              new Log(2L, "인턴 첫 출근 준비", "Java 문법과 API 흐름을 복습했다.", "EXCITED")));
+              new Log(1L, "Spring Boot 첫 실습", "Controller와 record를 배웠다.", Mood.NERVOUS),
+              new Log(2L, "인턴 첫 출근 준비", "Java 문법과 API 흐름을 복습했다.", Mood.FOCUSED)));
 
   public List<Log> findAll() {
     return logs;
