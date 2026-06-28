@@ -20,16 +20,13 @@ public class LogService {
   }
 
   public List<LogResponseDTO> getLogs() {
-    return logRepository.findAll().stream()
-        .map(
-            log -> new LogResponseDTO(log.getId(), log.getTitle(), log.getContent(), log.getMood()))
-        .toList();
+    return logRepository.findAll().stream().map(log -> LogResponseDTO.from(log)).toList();
   }
 
   public LogResponseDTO getLog(Long id) {
     Log log = findLogById(id);
 
-    return new LogResponseDTO(log.getId(), log.getTitle(), log.getContent(), log.getMood());
+    return LogResponseDTO.from(log);
   }
 
   public LogResponseDTO createLog(LogCreateRequestDTO request) {
@@ -39,8 +36,7 @@ public class LogService {
 
     Log savedLog = logRepository.save(newLog);
 
-    return new LogResponseDTO(
-        savedLog.getId(), savedLog.getTitle(), savedLog.getContent(), savedLog.getMood());
+    return LogResponseDTO.from(savedLog);
   }
 
   public LogResponseDTO updateLog(Long id, LogUpdateRequestDTO request) {
@@ -48,7 +44,7 @@ public class LogService {
 
     log.update(request.title(), request.content(), request.mood());
 
-    return new LogResponseDTO(log.getId(), log.getTitle(), log.getContent(), log.getMood());
+    return LogResponseDTO.from(log);
   }
 
   public void deleteLog(Long id) {
