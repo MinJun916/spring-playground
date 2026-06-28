@@ -2,6 +2,7 @@ package com.minjun.spring_playground;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +30,10 @@ public class LogController {
   @PostMapping("/logs")
   public LogResponse createLog(@RequestBody CreateLogRequest request) {
     return logService.createLog(request);
+  }
+
+  @PatchMapping("/logs/{id}")
+  public LogResponse updateLog(@PathVariable Long id, @RequestBody UpdateLogRequest request) {
+    return logService.updateLog(id, request);
   }
 }

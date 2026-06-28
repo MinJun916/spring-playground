@@ -36,4 +36,21 @@ public class LogService {
 
     return newLog;
   }
+
+  public LogResponse updateLog(Long id, UpdateLogRequest request) {
+    for (int index = 0; index < logs.size(); index++) {
+      LogResponse log = logs.get(index);
+
+      if (log.id().equals(id)) {
+        LogResponse updatedLog =
+            new LogResponse(id, request.title(), request.content(), request.mood());
+
+        logs.set(index, updatedLog);
+
+        return updatedLog;
+      }
+    }
+
+    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Log not found");
+  }
 }
